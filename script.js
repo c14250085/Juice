@@ -1,3 +1,5 @@
+let orders = JSON.parse(localStorage.getItem("juiceOrders")) || [];
+
 const juiceVariants = [
     "Es Jeruk", "Tomat", "Nanas", "Sirsak",
     "Apel", "Semangka", "Stroberi",
@@ -9,8 +11,6 @@ let selectedJuice = "";
 let selectedSugar = "";
 let selectedMilk = "";
 let selectedIce = "";
-
-let orders = JSON.parse(localStorage.getItem("juiceOrders")) || [];
 
 function saveOrders() {
     localStorage.setItem("juiceOrders", JSON.stringify(orders));
@@ -78,9 +78,8 @@ function addOrder() {
     };
 
     orders.push(order);
-    renderOrders();
-    resetSelections();
     saveOrders();
+    renderOrders();
 }
 
 function renderOrders() {
@@ -105,15 +104,15 @@ function renderOrders() {
 
 function deleteOrder() {
     const checkboxes = document.querySelectorAll(".orderCheckbox");
-    const indexesToDelete = [];
+    let newOrders = [];
 
-    checkboxes.forEach(cb => {
-        if (cb.checked) {
-            indexesToDelete.push(parseInt(cb.dataset.index));
+    checkboxes.forEach((cb, index) => {
+        if (!cb.checked) {
+            newOrders.push(orders[index]);
         }
     });
 
-    if (indexesToDelete.length === 0) {
+    if (newOrders.length === orders.length) {
         alert("Select at least one order to delete.");
         return;
     }
@@ -122,13 +121,9 @@ function deleteOrder() {
         return;
     }
 
-    // Delete from highest index to lowest
-    indexesToDelete.sort((a, b) => b - a);
+    orders = newOrders;
 
-    indexesToDelete.forEach(index => {
-        orders.splice(index, 1);
-    });
-
+    saveOrders();   // VERY IMPORTANT
     renderOrders();
 }
 
