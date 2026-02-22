@@ -80,6 +80,7 @@ function addOrder() {
     orders.push(order);
     saveOrders();
     renderOrders();
+    resetSelections();
 }
 
 function renderOrders() {
@@ -128,8 +129,19 @@ function deleteOrder() {
 }
 
 function resetSelections() {
+    // Clear input
     document.getElementById("customerName").value = "";
-    document.querySelectorAll("button").forEach(btn => btn.classList.remove("active"));
+
+    // Clear all active buttons only inside option groups
+    const groups = ["juiceOptions", "sugarOptions", "milkOptions", "iceOptions"];
+
+    groups.forEach(groupId => {
+        const group = document.getElementById(groupId);
+        const buttons = group.querySelectorAll("button");
+        buttons.forEach(btn => btn.classList.remove("active"));
+    });
+
+    // Reset stored selections
     selectedJuice = "";
     selectedSugar = "";
     selectedMilk = "";
