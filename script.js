@@ -10,7 +10,11 @@ let selectedSugar = "";
 let selectedMilk = "";
 let selectedIce = "";
 
-let orders = [];
+let orders = JSON.parse(localStorage.getItem("juiceOrders")) || [];
+
+function saveOrders() {
+    localStorage.setItem("juiceOrders", JSON.stringify(orders));
+}
 
 function createJuiceButtons() {
     const container = document.getElementById("juiceOptions");
@@ -76,6 +80,7 @@ function addOrder() {
     orders.push(order);
     renderOrders();
     resetSelections();
+    saveOrders();
 }
 
 function renderOrders() {
@@ -137,3 +142,4 @@ function resetSelections() {
 }
 
 createJuiceButtons();
+renderOrders();
