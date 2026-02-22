@@ -9,7 +9,6 @@ let selectedJuice = "";
 let selectedSugar = "";
 let selectedMilk = "";
 let selectedIce = "";
-let selectedIndex = null;
 
 let orders = [];
 
@@ -85,27 +84,47 @@ function renderOrders() {
 
     orders.forEach((order, index) => {
         const li = document.createElement("li");
-        li.textContent = `${order.name} - ${order.juice} | ${order.sugar} | ${order.milk} | ${order.ice}`;
-        li.onclick = function () {
-            document.querySelectorAll("li").forEach(item => item.classList.remove("selected"));
-            li.classList.add("selected");
-            selectedIndex = index;
-        };
+
+        li.innerHTML = `
+            <label style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" class="orderCheckbox" data-index="${index}">
+                <span>
+                    ${order.name} - ${order.juice} | ${order.sugar} | ${order.milk} | ${order.ice}
+                </span>
+            </label>
+        `;
+
         list.appendChild(li);
     });
 }
 
 function deleteOrder() {
-    if (selectedIndex === null) {
-        alert("Pilih orderan yang ingin dihapus.");
+    const checkboxes = document.querySelectorAll(".orderCheckbox");
+    const indexesToDelete = [];
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            indexesToDelete.push(parseInt(cb.dataset.index));
+        }
+    });
+
+    if (indexesToDelete.length === 0) {
+        alert("Select at least one order to delete.");
         return;
     }
 
-    if (confirm("Apakah kamu yakin ingin menghapus orderan ini?")) {
-        orders.splice(selectedIndex, 1);
-        selectedIndex = null;
-        renderOrders();
+    if (!confirm("Delete selected orders?")) {
+        return;
     }
+
+    // Delete from highest index to lowest
+    indexesToDelete.sort((a, b) => b - a);
+
+    indexesToDelete.forEach(index => {
+        orders.splice(index, 1);
+    });
+
+    renderOrders();
 }
 
 function resetSelections() {

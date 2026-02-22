@@ -136,3 +136,8 @@ li.selected {
     background: #ffe5e5;
     border: 1px solid #e57373;
 }
+
+.orderCheckbox {
+    width: 18px;
+    height: 18px;
+}
