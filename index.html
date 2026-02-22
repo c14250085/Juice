@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mam's Er Fresh Juice</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Mam's Er Fresh Juice</h1>
+
+        <!-- Customer Name -->
+        <div class="section">
+            <label>Nama</label>
+            <input type="text" id="customerName" placeholder="Enter name">
+        </div>
+
+        <!-- Juice Variants -->
+        <div class="section">
+            <label>Juice</label>
+            <div class="button-group" id="juiceOptions"></div>
+        </div>
+
+        <!-- Sugar -->
+        <div class="section">
+            <label>Sugar Level</label>
+            <div class="button-group" id="sugarOptions">
+                <button data-value="No Sugar">No Sugar</button>
+                <button data-value="Normal">Normal</button>
+                <button data-value="Less Sugar">Less Sugar</button>
+            </div>
+        </div>
+
+        <!-- Milk -->
+        <div class="section">
+            <label>Milk Level</label>
+            <div class="button-group" id="milkOptions">
+                <button data-value="No Milk">No Milk</button>
+                <button data-value="Normal">Normal</button>
+                <button data-value="Less Milk">Less Milk</button>
+            </div>
+        </div>
+
+        <!-- Ice -->
+        <div class="section">
+            <label>Ice Level</label>
+            <div class="button-group" id="iceOptions">
+                <button data-value="No Ice">No Ice</button>
+                <button data-value="Normal">Normal</button>
+                <button data-value="Less Ice">Less Ice</button>
+            </div>
+        </div>
+
+        <button class="primary-btn" onclick="addOrder()">Tambah Orderan</button>
+
+        <h2>Order List</h2>
+        <ul id="orderList"></ul>
+
+        <button class="delete-btn" onclick="deleteOrder()">Hapus Orderan</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
